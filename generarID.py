@@ -12,11 +12,15 @@ class GenerarIDAdministrador(GenerarID):
         super().__init__(nombreUsuario, dniUsuario)
     
     def generarID():
-        pass
+        id_administrador = f"{self.nombreUsuario}2023"
+        return id_administrador
+    
     
 class GenerarIDUsuario(GenerarID):
     def __init__(self, nombreUsuario, dniUsuario):
         super().__init__(nombreUsuario, dniUsuario)
     
     def generarID():
-        pass
+        ultimos_digitos = self.dniUsuario[-3:]
+        id_usuario = f"{self.nombreUsuario}{ultimos_digitos}"
+        return id_usuario
