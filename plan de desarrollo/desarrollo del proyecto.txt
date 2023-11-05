@@ -1,0 +1,8 @@
+tareas que hacer:
+1 _ primero tienes que crear toda la base de datos para guardar los libros, tienes que utilizar los principios SOLID para hacerlo.
+2 _ Tienes que crear las funciones que se encarguen de guardar los usuarios y las contraseñas de los usuarios y todo lo referente a esto.
+3_ Luego ayudar a los otros para terminar las funciones de los botones que habrá 
+
+Urgente:
+Los primeras dos tareas tendrán que hacerse lo mas pronto posible
+
