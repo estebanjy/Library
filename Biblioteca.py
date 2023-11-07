@@ -15,6 +15,7 @@ class biblioteca:
             Domicilio TEXT,
             FechaNacimiento TEXT,
             Sexo TEXT,
+            Contrasenia TEXT,
             IDAdministrador TEXT PRIMARY KEY
             );""")
         
@@ -25,13 +26,14 @@ class biblioteca:
             Domicilio TEXT,
             FechaNacimiento TEXT,
             Sexo TEXT,
+            Contrasenia TEXT,
             IDUsuarioNormal TEXT PRIMARY KEY
             );""")
         
         cursor.execute("""CREATE TABLE IF NOT EXISTS Libros(
             Titulo TEXT,
             Autores TEXT,
-            IBSN TEXT PRIMARY KEY, 
+            ISBN TEXT PRIMARY KEY, 
             Genero TEXT,
             Editorial TEXT,
             FechaPublicacion TEXT,
