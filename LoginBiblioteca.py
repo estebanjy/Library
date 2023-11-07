@@ -18,6 +18,7 @@ class LoginUI(QWidget):
         self.show()
     
     def interfazLogin(self):
+        # Etiqueta de ingreso a la aplicación
         etiqueta_login = QLabel(self)
         etiqueta_login.setText("Ingresar a la Biblioteca")
         etiqueta_login.move(80, 10)
@@ -65,7 +66,7 @@ class LoginUI(QWidget):
         usuarios = {}  
         
         try:
-            with open("archivos/usuarios.txt", 'r') as f:
+            with open("archivos/users.txt", 'r') as f:
                 for line in f:
                     campos_usuario = line.split(" ")
                     nombre_usuario = campos_usuario[0]
@@ -73,7 +74,8 @@ class LoginUI(QWidget):
                     usuarios[nombre_usuario] = password
         except FileNotFoundError:
             print("El archivo no existe. Creando nuevo archivo de usuarios")
-            f = open ("files/users.txt", "w")
+            f = open ("archivos/users.txt", "w")
+            
         nombre_usuario = self.nombre_entrada.text()
         password = self.passwd_entrada.text()
         if (nombre_usuario, password) in usuarios.items():
@@ -93,7 +95,7 @@ class LoginUI(QWidget):
         Cuando se hace clic en este botón, se abre una nueva ventana
         para crear una cuenta nueva
         """
-        self.create_new_user_dialog = CrearNuevoUsuario()  # importa el modulo de registro
+        self.create_new_user_dialog = CrearNuevoUsuario()  # importa el modulo de Registro
         self.create_new_user_dialog.show()
     
     def eventoCerrar(self, event):
@@ -107,7 +109,7 @@ class LoginUI(QWidget):
             event.ignore()
 
 
-# Run program
+# Ejecuta el programa
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = LoginUI()
