@@ -1,5 +1,5 @@
 """
-v.0.2
+v.0.3
 """
 
 import sys
@@ -20,6 +20,14 @@ class CargarLibro(QWidget):
 
         layout = QFormLayout()
 
+        # Widget para mostrar la imagen de la tapa del libro
+        self.imagen_tapa_label = QLabel()
+        self.imagen_tapa_label.setAlignment(Qt.AlignCenter)
+        self.imagen_tapa_label.setFixedSize(70, 80)
+        self.cargar_imagen_button = QPushButton('Cargar Tapa del Libro')
+        self.cargar_imagen_button.clicked.connect(self.cargar_imagen)
+
+        # 
         self.titulo_edit = QLineEdit(self)
         self.autores_edit = QLineEdit(self)
         self.isbn_edit = QLineEdit(self)
@@ -29,6 +37,8 @@ class CargarLibro(QWidget):
         self.fecha_publicacion_edit.setDisplayFormat("dd/MM/yyyy")
         self.resumen_edit = QTextEdit(self)
 
+        layout.addRow('Tapa del Libro:', self.imagen_tapa_label)
+        layout.addRow('', self.cargar_imagen_button)
         layout.addRow('Título:', self.titulo_edit)
         layout.addRow('Autor/es:', self.autores_edit)
         layout.addRow('ISBN:', self.isbn_edit)
@@ -43,6 +53,20 @@ class CargarLibro(QWidget):
         layout.addRow('', registro_button)
 
         self.setLayout(layout)
+
+    def cargar_imagen(self):
+        # Abrir un cuadro de diálogo para seleccionar la imagen de la tapa del libro
+        file_dialog = QFileDialog()
+        file_dialog.setNameFilter("Archivos de Imagen (*.png *.jpg *.jpeg *.bmp)")
+        file_dialog.setFileMode(QFileDialog.ExistingFile)
+
+        if file_dialog.exec_():
+            file_path = file_dialog.selectedFiles()[0]
+
+            # Mostrar la imagen en el widget QLabel
+            pixmap = QPixmap(file_path)
+            self.imagen_tapa_label.setPixmap(pixmap)
+            self.imagen_tapa_label.setScaledContents(True)
 
     def registrar_libro(self):
         with open("archivos/libros.txt", 'a+') as f:
@@ -61,3 +85,4 @@ if __name__ == '__main__':
     ex = CargarLibro()
     ex.show()
     sys.exit(app.exec_())
+
