@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 from Registro import CrearNuevoUsuario    
 import sqlite3
 from hash import Hash
+from datosUsuarios import datosUsuario
 
 class LoginUI(QWidget):
 
@@ -65,19 +66,43 @@ class LoginUI(QWidget):
         Si existe, muestra un mensaje y se cierra el prog
         Si no existe, muestra un mensaje de error
         """     
+        nombre = self.nombre_entrada.text()
+        contrasenia = self.passwd_entrada.text()
 
-        user = cursor.execute("""SELECT Nombre, Contrasenia FROM Usuarios
-        WHERE Nombre = ?""", (self.nombre_entrada.text(), ))
+        user = cursor.execute("""SELECT Nombre, Contrasenia, IDUsuarioNormal FROM Usuarios
+        WHERE Nombre = ?""", (nombre, ))
+
+        admin = cursor.execute("""SELECT Nombre, Contrasenia FROM Administradores
+        WHERE Nombre = ?""", (nombre, ))
         
-        resultado = user.fetchall()
         bandera = False
+        EsAdmin = False 
+        
+        
+        resultado = admin.fetchall()
         for i in resultado:
-            if Hash.check_password(i[1], self.passwd_entrada.text()):
+            if Hash.check_password(i[1], contrasenia):
                 bandera = True
+                EsAdmin = True
+                break 
+        
+        resultado = user.fetchall() 
+        for i in resultado:
+            if Hash.check_password(i[1], contrasenia()):
+                bandera = True 
+                resultado = i[3] 
                 break
+
         if bandera:
             QMessageBox.information(self, "Inicio de sesión exitoso", "Inicio de sesión exitoso", QMessageBox.Ok, QMessageBox.Ok)
-            self.close()
+            
+            if EsAdmin:
+                self.close()
+                #aqui hay que enlazarlo con el menu principal
+            else:
+                id = datosUsuario(resultado)
+                #aqui hay que retornar el id del usuario normal ya que sera necesario en otras funciones
+                self.close()
         else:
             QMessageBox.warning(self, "Error", "El nombre de usuario o la contraseña son incorrectos", QMessageBox.Close, QMessageBox.Close)
             

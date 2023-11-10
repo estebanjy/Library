@@ -3,6 +3,7 @@ v.0.4
 """
 
 import sys
+from usuario import Administrador, UsuarioNormal
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -10,7 +11,7 @@ from PyQt5.QtCore import *
 class CrearNuevoUsuario(QWidget):
     def __init__(self):
         super().__init__()
-
+        self.genero_seleccionado = None
         self.initUI()
 
     def initUI(self):
@@ -112,16 +113,19 @@ class CrearNuevoUsuario(QWidget):
         if contrasena != confirmar_password:
             QMessageBox.warning(self, "Error", "Las contraseñas no coinciden. Inténtelo de nuevo.", QMessageBox.Close, QMessageBox.Close)
         else:
-            with open("archivos/users.txt", 'a+') as f:
-                f.write(self.usuario_edit.text() + " ")
-                f.write(self.contrasena_edit.text() + " ")
-                f.write(self.documento_edit.text() + " ")
-                f.write(self.telefono_edit.text() + " ")
-                f.write(self.domicilio_edit.text() + " ")
-                f.write(self.fecha_nacimiento_edit.text() + " ")
-                f.write(self.genero_seleccionado + "\n")
-            self.close()
-        QMessageBox.information(self, 'Registro Exitoso', 'Usuario registrado exitosamente!')
+            if self.administrador_checkbox.isChecked():
+                if self.contrasena_admin_edit.text() != "Luis Miguel": 
+                    QMessageBox.warning(self, "Error", "No es la Contraseña correcta. Inténtelo de nuevo.", QMessageBox.Close, QMessageBox.Close)
+                else: 
+                    Administrador(self.usuario_edit.text(), self.documento_edit.text(), self.telefono_edit.text(), self.domicilio_edit.text(), self.fecha_nacimiento_edit.text(), self.genero_seleccionado, contrasena).generarAdministrador()
+
+                    self.close()
+                    QMessageBox.information(self, 'Registro Exitoso', 'Administrador registrado exitosamente!')
+            else: 
+                UsuarioNormal(self.usuario_edit.text(), self.documento_edit.text(), self.telefono_edit.text(), self.domicilio_edit.text(), self.fecha_nacimiento_edit.text(), self.genero_seleccionado, contrasena).generarUsuarioNomal()
+
+                self.close()
+                QMessageBox.information(self, 'Registro Exitoso', 'Usuario registrado exitosamente!')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
