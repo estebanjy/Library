@@ -1,130 +1,130 @@
-import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QMessageBox, QButtonGroup, QPushButton, QLabel, QLineEdit)
-from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.Qt import QRadioButton
+"""
+v.0.4
+"""
 
+import sys
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
 class CrearNuevoUsuario(QWidget):
-
     def __init__(self):
         super().__init__()
-        self.inicializarUI()
 
-    def inicializarUI(self):
-        # Inicializa la ventana y muestra su contenido a la pantalla
-        self.setGeometry(100, 100, 400, 500)
-        self.setWindowTitle('Registrar nuevo usuario')
-        self.recopilarInformacion()
-        self.show()
+        self.initUI()
 
-    def recopilarInformacion(self):
-        """
-        Crea los widgets para recopilar información para crear una nueva cuenta
-        Etiqueta de Nuevo Usuario
-        """
-        icono_nuevo_usuario = "imagenes/nuevo_usuario.png"
-        
-        try:
-            with open(icono_nuevo_usuario):
-                nuevo_usuario = QLabel(self)
-                pixmap = QPixmap(icono_nuevo_usuario)
-                nuevo_usuario.setPixmap(pixmap)
-                nuevo_usuario.move(150, 60)
-        except FileNotFoundError:
-            print("No se encontró la imagen.")
-        
-        etiqueta_login = QLabel(self)
-        etiqueta_login.setText("Nueva cuenta")
-        etiqueta_login.move(120, 15)
-        etiqueta_login.setFont(QFont('Arial', 20))
-        
-        # Etiquetas de nombre de usuario
-        etiqueta_nombre = QLabel("Nombre de usuario:", self)
-        etiqueta_nombre.move(35, 180)
-        self.nombre = QLineEdit(self)
-        self.nombre.move(165, 180)
-        self.nombre.resize(200, 20)
-        
-        # Etiqueta documento
-        etiqueta_dni = QLabel("Documento/DNI:", self)
-        etiqueta_dni.move(35, 210)
-        self.dni = QLineEdit(self)
-        self.dni.move(165, 210)
-        self.dni.resize(200, 20)
-        
-        # Etiqueta nro.de telefono
-        etiqueta_tel = QLabel("Teléfono/Cel.:", self)
-        etiqueta_tel.move(35, 240)
-        self.tel = QLineEdit(self)
-        self.tel.move(165, 240)
-        self.tel.resize(200, 20)
-        
-        # Etiqueta domicilio
-        etiqueta_domicilio = QLabel("Domicilio:", self)
-        etiqueta_domicilio.move(35, 270)
-        self.domicilio = QLineEdit(self)
-        self.domicilio.move(165, 270)
-        self.domicilio.resize(200, 20)
-        
-        # Etiqueta fecha de nacimiento
-        etiqueta_fecha_nac = QLabel("Fecha de Nac.:", self)
-        etiqueta_fecha_nac.move(35, 300)
-        self.nacimiento = QLineEdit(self)
-        self.nacimiento.move(165, 300)
-        self.nacimiento.resize(200, 20)
-               
-        # Etiqueta sexo y radioButtons
-        etiqueta_sexo = QLabel("Sexo:", self)
-        etiqueta_sexo.move(35, 330)
-        rb_masculino = QRadioButton("masculino", self)
-        rb_masculino.move(100, 330)
-        rb_femenino = QRadioButton("femenino", self)
-        rb_femenino.move(210, 330)
-        rb_otro = QRadioButton("otro", self)
-        rb_otro.move(314, 330)
-        rb_grupo = QButtonGroup(self)
-        rb_grupo.addButton(rb_masculino)
-        rb_grupo.addButton(rb_femenino)
-        rb_grupo.addButton(rb_otro)
-                
-        # Crea etiquetas de contraseña y confirmación de contraseña
-        etiqueta_passwd = QLabel("Contraseña:", self)
-        etiqueta_passwd.move(35, 360)
-        self.passwd = QLineEdit(self)
-        self.passwd.setEchoMode(QLineEdit.Password)
-        self.passwd.move(165, 360)
-        self.passwd.resize(200, 20)
-        etiqueta_confirmar = QLabel("Confirmar:", self)
-        etiqueta_confirmar.move(35, 390)
-        self.confirmar_entrada = QLineEdit(self)
-        self.confirmar_entrada.setEchoMode(QLineEdit.Password)
-        self.confirmar_entrada.move(165, 390)
-        self.confirmar_entrada.resize(200, 20)
-        
-        # botón de registro
+    def initUI(self):
+        self.setWindowTitle('Registro de Usuario')
+        self.setGeometry(300, 300, 400, 300)
+
+        layout = QFormLayout()
+
+        # Widget para mostrar icono de Nuevo Usuario
+        icono_nuevo_usuario = "imagenes/nuevo_usuario.png"        
+        self.nuevo_usuario = QLabel(self)
+        self.nuevo_usuario.setAlignment(Qt.AlignCenter)
+        self.nuevo_usuario.setFixedSize(100, 100)
+        pixmap = QPixmap(icono_nuevo_usuario)
+        self.nuevo_usuario.setPixmap(pixmap)
+
+        # Widgets de campos de datos del usuario
+        self.usuario_edit = QLineEdit(self)
+        self.documento_edit = QLineEdit(self)
+        self.telefono_edit = QLineEdit(self)
+        self.domicilio_edit = QLineEdit(self)
+        self.fecha_nacimiento_edit = QDateEdit(self)
+        self.fecha_nacimiento_edit.setDisplayFormat("dd/MM/yyyy")        
+        self.genero_radio_masculino = QRadioButton('Masculino')
+        self.genero_radio_femenino = QRadioButton('Femenino')
+        self.genero_radio_otros = QRadioButton('Otros')
+        self.administrador_checkbox = QCheckBox('Administrador')
+        self.contrasena_edit = QLineEdit()
+        self.contrasena_edit.setEchoMode(QLineEdit.Password)
+        self.confirmar_contrasena_edit = QLineEdit()
+        self.confirmar_contrasena_edit.setEchoMode(QLineEdit.Password)
+        self.confirmar_contrasena_edit.setPlaceholderText('Confirmar Contraseña')
+        self.contrasena_admin_edit = QLineEdit()
+        self.contrasena_admin_edit.setEchoMode(QLineEdit.Password)
+        self.contrasena_admin_edit.setEnabled(False)
+        self.confirmar_contrasena_admin_edit = QLineEdit()
+        self.confirmar_contrasena_admin_edit.setEchoMode(QLineEdit.Password)
+        self.confirmar_contrasena_admin_edit.setPlaceholderText('Confirmar Contraseña')
+        self.confirmar_contrasena_admin_edit.setEnabled(False)
+
+        self.genero_group = [self.genero_radio_masculino, self.genero_radio_femenino, self.genero_radio_otros]
+        self.genero_radio_masculino.setChecked(True)
+
+        layout.addRow(self.nuevo_usuario)
+        layout.addRow('Nombre de Usuario:', self.usuario_edit)
+        layout.addRow('Documento / DNI:', self.documento_edit)
+        layout.addRow('Número de Teléfono:', self.telefono_edit)
+        layout.addRow('Domicilio:', self.domicilio_edit)
+        layout.addRow('Fecha de Nacimiento:', self.fecha_nacimiento_edit)
+
+        # Radio Buttons (horizontales)para la etiqueta género
+        genero_layout = QHBoxLayout()
+        genero_layout.addWidget(self.genero_radio_masculino)
+        genero_layout.addWidget(self.genero_radio_femenino)
+        genero_layout.addWidget(self.genero_radio_otros)
+        layout.addRow('Género:', genero_layout)
+        # Conectar los radio buttons a la función correspondiente
+        self.genero_radio_masculino.clicked.connect(self.on_radio_button_clicked)
+        self.genero_radio_femenino.clicked.connect(self.on_radio_button_clicked)
+        self.genero_radio_otros.clicked.connect(self.on_radio_button_clicked)
+
+        # Contraseña de usuario
+        layout.addRow('Contraseña usuario:', self.contrasena_edit)
+        layout.addRow('', self.confirmar_contrasena_edit)
+
+        # Contraseña de administrador
+        layout.addRow('Tipo de usuario:', self.administrador_checkbox)
+        layout.addRow('Contraseña admin:', self.contrasena_admin_edit)
+        layout.addRow('', self.confirmar_contrasena_admin_edit)
+        self.administrador_checkbox.clicked.connect(self.on_administrador_checkbox_clicked)
+
+        # Boton de registro
         boton_registro = QPushButton("Registrarse", self)
-        boton_registro.move(100, 430)
-        boton_registro.resize(200, 40)
-        boton_registro.clicked.connect(self.confirmarRegistro)
+        boton_registro.clicked.connect(self.registrarUsuario)
+        layout.addRow('', boton_registro)
+        
+        self.setLayout(layout)
 
-    def confirmarRegistro(self):
+    def on_administrador_checkbox_clicked(self):
+        self.contrasena_admin_edit.setEnabled(self.administrador_checkbox.isChecked())
+        self.confirmar_contrasena_admin_edit.setEnabled(self.administrador_checkbox.isChecked())
+
+    def on_radio_button_clicked(self):
+        # Determinar qué radio button fue seleccionado
+        if self.genero_radio_masculino.isChecked():
+            self.genero_seleccionado = 'Masculino'
+        elif self.genero_radio_femenino.isChecked():
+            self.genero_seleccionado = 'Femenino'
+        elif self.genero_radio_otros.isChecked():
+            self.genero_seleccionado = 'Otros'
+
+    def registrarUsuario(self):
         """
         Cuando el usuario clickea en Reguistrarse, verifica que las contraseñas coincidan
         si coinciden, se guarda en nombre de usuario y contraseña en el archivo users.txt
         """
-        texto_passwd = self.passwd.text()
-        confirmar_texto = self.confirmar_entrada.text()
-        if texto_passwd != confirmar_texto:
+        contrasena = self.contrasena_edit.text()
+        confirmar_password = self.confirmar_contrasena_edit.text()
+        if contrasena != confirmar_password:
             QMessageBox.warning(self, "Error", "Las contraseñas no coinciden. Inténtelo de nuevo.", QMessageBox.Close, QMessageBox.Close)
         else:
             with open("archivos/users.txt", 'a+') as f:
-                f.write(self.nombre.text() + " ")
-                f.write(texto_passwd + "\n")
+                f.write(self.usuario_edit.text() + " ")
+                f.write(self.contrasena_edit.text() + " ")
+                f.write(self.documento_edit.text() + " ")
+                f.write(self.telefono_edit.text() + " ")
+                f.write(self.domicilio_edit.text() + " ")
+                f.write(self.fecha_nacimiento_edit.text() + " ")
+                f.write(self.genero_seleccionado + "\n")
             self.close()
+        QMessageBox.information(self, 'Registro Exitoso', 'Usuario registrado exitosamente!')
 
-
-# Ejecuta el programa
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = CrearNuevoUsuario()
+    ex = CrearNuevoUsuario()
+    ex.show()
     sys.exit(app.exec_())
