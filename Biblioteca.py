@@ -1,10 +1,10 @@
 import sqlite3
 
-class biblioteca:
+class Biblioteca:
     def __init__(self):
         pass
     
-    def crearBasaDatos():
+    def crearBaseDatos():
         conexion = sqlite3.connect("biblioteca.db")
         cursor = conexion.cursor()
 
@@ -43,6 +43,10 @@ class biblioteca:
             HistorialPrestamos TEXT,
             FOREIGN KEY(IDUsuarioNormal) REFERENCES Usuarios
             );""")
-        
+        conexion.commit() 
         cursor.close()
-        conexion.close()
+        conexion.close()      
+    
+    
+s = Biblioteca()
+Biblioteca.crearBaseDatos()

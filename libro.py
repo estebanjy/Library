@@ -1,7 +1,8 @@
 import sqlite3
+#from accionesLibro import AccionesAdministrador
 
 class Libro:    
-    def __init__(self, titulo, autores, ISBN, genero, editorial, fechaPublicacion, resumen, imagen, usuarioPrestado):
+    def __init__(self, titulo, autores, ISBN, genero, editorial, fechaPublicacion, resumen, imagen):
         self.titulo = titulo
         self.autores = autores
         self.ISBN = ISBN
@@ -10,13 +11,6 @@ class Libro:
         self.fechaPublicacion = fechaPublicacion
         self.resumen = resumen
         self.imagen = imagen
-        self.usuarioPrestado = usuarioPrestado
-        self.historialPrestamos = self.verHistorialPrestamos()
         
-    
-    def verHistorialPrestamos(self):
-        return self.historialPrestamos
-        
-    def verUsuarioPrestado(self):
-        #aqui tienes que crear una funcion para que consulte a la base de datos quien tiene p
-        return self.usuarioPrestado
+#l = Libro("el hobbit", "asd", "asdsad", "accion", "asdd", "asdasd", " aksdjsa", "asdlkj")
+#AccionesAdministrador.guardarlibro(l)

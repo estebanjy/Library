@@ -4,7 +4,7 @@ v.0.3
 
 import sys
 import os
-import shutil  
+import shutil  # Importa el módulo shutil
 from accionesLibro import AccionesAdministrador
 from libro import Libro
 from PyQt5.QtWidgets import *
@@ -81,7 +81,7 @@ class CargarLibro(QWidget):
         if not os.path.exists(destino):
             os.makedirs(destino)
 
-        # Ruta de la copia en la carpeta de destino
+        # Construye la ruta de la copia en la carpeta de destino
         _, file_name = os.path.split(self.file_path)
         destination_path = os.path.join(destino, file_name)
         

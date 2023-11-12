@@ -3,7 +3,8 @@ from libro import Libro
 from abc import ABC, abstractmethod
 
 class Acciones(ABC):  
-    def verLibrosDisponibles():
+    
+    def verLibrosDisponibles(self):
         conexion = sqlite3.connect("biblioteca.db")
         cursor = conexion.cursor()
         libros = cursor.execute("""SELECT Imagen, Titulo, Autores, Genero, Editorial, Resumen FROM Libros
@@ -12,7 +13,8 @@ class Acciones(ABC):
         cursor.close()
         conexion.close()
         #aqui se tiene que crear algo para poder mostrarlo despues en el visual
-        return resultado
+        return resultado 
+    
     
     def verDatosGeneralesLibro(libro):
         titulo = libro.titulo
@@ -107,4 +109,6 @@ class AccionesUsuarioNormal(Acciones):
         conexion.commit()
         cursor.close()
         conexion.close()
-    
+s = AccionesAdministrador()
+resultado = s.verLibrosDisponibles()
+print(resultado)

@@ -25,6 +25,7 @@ class GenerarIDUsuario(GenerarID):
         super().__init__(nombreUsuario, dniUsuario)
     
     def generarID(self):
-        ultimos_digitos = self.dniUsuario[-3:]
+        ultimos_digitos = str(self.dniUsuario)[-3:]
         id_usuario = f"{self.nombreUsuario}{ultimos_digitos}"
         return id_usuario
+    
