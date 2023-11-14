@@ -26,7 +26,15 @@ class Acciones(ABC):
         resumen = libro.resumen
         imagen = libro.imagen
         usuarioPrestado = libro.usuarioPrestado
-    
+
+    def busquedaLibro(self, texto):
+        conexion = sqlite3.connect("biblioteca.db")
+        cursor = conexion.cursor()
+        libros = cursor.execute("""SELECT Imagen, Titulo, Autores, Genero, Editorial, Resumen, ISBN FROM Libros WHERE Titulo LIKE ? """, ('%' + texto + '%',))
+        resultado = libros.fetchall()
+        cursor.close()
+        conexion.close()
+        return resultado
     
 class AccionesAdministrador(Acciones): 
     #hay que hacer algo para que las acciones de administrador esten enlasadas con una cuenta admin 
@@ -109,6 +117,3 @@ class AccionesUsuarioNormal(Acciones):
         conexion.commit()
         cursor.close()
         conexion.close()
-s = AccionesAdministrador()
-resultado = s.verLibrosDisponibles()
-print(resultado)
